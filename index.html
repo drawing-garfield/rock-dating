@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rock — a dating app for rock people</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@400;600;800;900&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --basalt:#26282A;
+    --basalt-2:#33363A;
+    --quartz:#EAE7DD;
+    --quartz-2:#F4F2EB;
+    --iron:#B54A32;
+    --iron-2:#8F3A27;
+    --mica:#C9962B;
+    --mica-2:#A87A1F;
+    --lichen:#6B7A4F;
+    --lichen-2:#54613E;
+    --ink:#20201E;
+    --paper:#F4F2EB;
+    --font-display:'Rokkitt', serif;
+    --font-body:'Work Sans', sans-serif;
+    --font-mono:'Space Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--basalt);
+    color:var(--paper);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    opacity:0.75;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:80px 24px 120px;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,150,43,0.18), transparent 60%),
+      var(--basalt);
+    overflow:hidden;
+  }
+  .strata-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    opacity:0.5;
+    z-index:0;
+  }
+  .hero-content{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+  }
+  .wordmark{
+    font-family:var(--font-display);
+    font-weight:900;
+    font-size:clamp(64px, 14vw, 148px);
+    line-height:0.92;
+    letter-spacing:-0.02em;
+    text-transform:uppercase;
+    color:var(--quartz-2);
+  }
+  .wordmark em{
+    font-style:italic;
+    color:var(--iron);
+  }
+  .tagline{
+    font-family:var(--font-body);
+    font-size:clamp(17px, 2.4vw, 21px);
+    font-weight:500;
+    max-width:520px;
+    margin:20px auto 0;
+    color:rgba(244,242,235,0.85);
+    line-height:1.5;
+  }
+  .rock-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+    max-width:600px;
+    margin:32px auto 0;
+  }
+  .rock-chip{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:0.04em;
+    padding:6px 12px;
+    border:1px solid rgba(244,242,235,0.25);
+    border-radius:100px;
+    color:rgba(244,242,235,0.8);
+    white-space:nowrap;
+  }
+
+  .waitlist-form{
+    margin:44px auto 0;
+    display:flex;
+    gap:10px;
+    max-width:420px;
+    width:100%;
+  }
+  .waitlist-form input[type="email"]{
+    flex:1;
+    min-width:0;
+    padding:15px 18px;
+    border-radius:8px;
+    border:1.5px solid rgba(244,242,235,0.2);
+    background:rgba(244,242,235,0.06);
+    color:var(--paper);
+    font-family:var(--font-body);
+    font-size:15px;
+    outline:none;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .waitlist-form input[type="email"]::placeholder{color:rgba(244,242,235,0.4);}
+  .waitlist-form input[type="email"]:focus{
+    border-color:var(--mica);
+    background:rgba(244,242,235,0.1);
+  }
+  .btn{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:15px;
+    padding:15px 22px;
+    border-radius:8px;
+    border:none;
+    background:var(--iron);
+    color:var(--quartz-2);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover{background:var(--iron-2); transform:translateY(-1px);}
+  .btn:active{transform:translateY(0);}
+  .btn:focus-visible, input:focus-visible{outline:2px solid var(--mica); outline-offset:2px;}
+
+  .form-note{
+    font-family:var(--font-mono);
+    font-size:12px;
+    margin-top:14px;
+    color:rgba(244,242,235,0.55);
+    min-height:16px;
+  }
+  .form-note.success{color:var(--mica);}
+  .form-note.error{color:var(--iron);}
+
+  .counter{
+    margin-top:26px;
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:rgba(244,242,235,0.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+  .counter .dot{width:6px; height:6px; border-radius:50%; background:var(--lichen); display:inline-block;}
+
+  /* ---------- STRATA SECTIONS ---------- */
+  .stratum{
+    position:relative;
+    padding:110px 24px 130px;
+    clip-path:polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%);
+    margin-top:-2px;
+  }
+  .stratum-inner{
+    max-width:680px;
+    margin:0 auto;
+    position:relative;
+    z-index:1;
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .stratum-inner.visible{opacity:1; transform:translateY(0);}
+
+  .stratum-label{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    opacity:0.65;
+    margin-bottom:14px;
+    display:block;
+  }
+  .stratum h2{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(30px, 4.5vw, 46px);
+    line-height:1.08;
+    margin-bottom:18px;
+  }
+  .stratum p{
+    font-size:17px;
+    line-height:1.65;
+    max-width:520px;
+    opacity:0.92;
+  }
+
+  .stratum--iron{background:var(--iron); color:var(--quartz-2);}
+  .stratum--mica{background:var(--mica); color:var(--ink);}
+  .stratum--lichen{background:var(--lichen); color:var(--quartz-2);}
+  .stratum--quartz{background:var(--quartz); color:var(--ink);}
+
+  .specimen-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:0.04em;
+    margin-top:26px;
+    padding:8px 14px;
+    border-radius:100px;
+    border:1px solid currentColor;
+    opacity:0.65;
+  }
+
+  .wildcard-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:24px;
+  }
+  .wildcard-item{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    padding:9px 14px;
+    background:rgba(32,32,30,0.06);
+    border-radius:6px;
+  }
+
+  /* ---------- FOOTER CTA ---------- */
+  .footer-cta{
+    background:var(--basalt-2);
+    padding:120px 24px 60px;
+    text-align:center;
+    clip-path:polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%);
+    margin-top:-2px;
+  }
+  .footer-cta h2{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(28px, 4vw, 40px);
+    max-width:520px;
+    margin:0 auto 14px;
+  }
+  .footer-cta p{
+    color:rgba(244,242,235,0.7);
+    max-width:440px;
+    margin:0 auto;
+    font-size:15.5px;
+    line-height:1.5;
+  }
+  .footer-cta .waitlist-form{margin-top:36px;}
+  .footer-fine{
+    margin-top:70px;
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:rgba(244,242,235,0.4);
+    letter-spacing:0.03em;
+  }
+
+  @media (max-width:520px){
+    .waitlist-form{flex-direction:column;}
+    .stratum{padding:80px 20px 90px;}
+    .hero{padding:60px 20px 90px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .stratum-inner{transition:none; opacity:1; transform:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <svg class="strata-bg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <!-- left block of strata -->
+    <g>
+      <rect x="0" y="520" width="560" height="60" fill="#33363A"/>
+      <rect x="0" y="580" width="560" height="50" fill="#3D4044"/>
+      <rect x="0" y="630" width="560" height="70" fill="#2E3538"/>
+      <rect x="0" y="700" width="560" height="100" fill="#252A2C"/>
+    </g>
+    <!-- fault line displacement -->
+    <g transform="translate(560,0)">
+      <rect x="0" y="480" width="640" height="60" fill="#33363A"/>
+      <rect x="0" y="540" width="640" height="50" fill="#3D4044"/>
+      <rect x="0" y="590" width="640" height="70" fill="#2E3538"/>
+      <rect x="0" y="660" width="640" height="140" fill="#252A2C"/>
+    </g>
+    <line x1="560" y1="480" x2="560" y2="800" stroke="#C9962B" stroke-width="2" opacity="0.5" stroke-dasharray="4 6"/>
+    <circle cx="560" cy="500" r="4" fill="#C9962B" opacity="0.8"/>
+  </svg>
+
+  <div class="hero-content">
+    <span class="eyebrow">Now accepting geologists, guitarists &amp; gym rats</span>
+    <h1 class="wordmark" style="margin-top:18px;">Rock<em>.</em></h1>
+    <p class="tagline">A dating app for people who are, in some way, deeply into rocks. Geology, rock music, bouldering, Rockefeller Center, the Rockettes, rockets — if it's rock-adjacent, so is your match.</p>
+
+    <div class="rock-chips">
+      <span class="rock-chip">🪨 Geology</span>
+      <span class="rock-chip">🎸 Rock Music</span>
+      <span class="rock-chip">🧗 Bouldering</span>
+      <span class="rock-chip">🏙️ Rockefeller Center</span>
+      <span class="rock-chip">💃 The Rockettes</span>
+      <span class="rock-chip">🚀 Rockets</span>
+    </div>
+
+    <form class="waitlist-form" id="hero-form">
+      <input type="email" id="hero-email" placeholder="you@example.com" required aria-label="Email address" />
+      <button type="submit" class="btn">Join the waitlist</button>
+    </form>
+    <div class="form-note" id="hero-note"></div>
+    <div class="counter" id="hero-counter"><span class="dot"></span><span id="counter-text">Loading rock people…</span></div>
+  </div>
+</section>
+
+<section class="stratum stratum--iron">
+  <div class="stratum-inner" data-reveal>
+    <span class="stratum-label">Layer 01 — Igneous, Sedimentary, or Metamorphic</span>
+    <h2>Know your rock type. Meet your rock match.</h2>
+    <p>Take the 90-second compatibility quiz to find out if you're igneous (hot-headed, quick to bond) or sedimentary (patient, built up layer by layer). We'll match you with someone whose formation process complements yours.</p>
+    <span class="specimen-tag">SPECIMEN: compatibility quiz, coming soon</span>
+  </div>
+</section>
+
+<section class="stratum stratum--mica">
+  <div class="stratum-inner" data-reveal>
+    <span class="stratum-label">Layer 02 — Rock Music</span>
+    <h2>Swipe right if your playlist headbangs.</h2>
+    <p>Classic rock, prog, punk, metal, or whatever's happening at the basalt-adjacent underground venue this weekend — set your profile to your record collection and find someone who'll actually come to the show.</p>
+  </div>
+</section>
+
+<section class="stratum stratum--lichen">
+  <div class="stratum-inner" data-reveal>
+    <span class="stratum-label">Layer 03 — Bouldering</span>
+    <h2>Send it together.</h2>
+    <p>Chalk bags, crash pads, and someone to spot you on that V4 project you've been working for three weeks. We match by gym, grade, and whether you're a "warm up on the easy stuff" or "straight to the crux" kind of person.</p>
+  </div>
+</section>
+
+<section class="stratum stratum--quartz">
+  <div class="stratum-inner" data-reveal>
+    <span class="stratum-label">Layer 04 — The Rest of the Rock Universe</span>
+    <h2>Rockefeller Center. The Rockettes. Actual rockets. We don't judge.</h2>
+    <p>Not every rock person is a geologist. Some of you just really love a Christmas tree lighting, a kick line, or a good SpaceX launch stream. There's a layer for you too.</p>
+    <div class="wildcard-grid">
+      <span class="wildcard-item">🌲 Tree lighting traditionalists</span>
+      <span class="wildcard-item">💃 Kick line enthusiasts</span>
+      <span class="wildcard-item">🚀 Launch-day watchers</span>
+      <span class="wildcard-item">🧊 Ice rink romantics</span>
+    </div>
+  </div>
+</section>
+
+<section class="footer-cta">
+  <h2>Your future rock partner is out there.</h2>
+  <p>Get early access when we launch. No spam, no pebbles — just one email when it's your turn.</p>
+  <form class="waitlist-form" id="footer-form" style="margin-left:auto; margin-right:auto;">
+    <input type="email" id="footer-email" placeholder="you@example.com" required aria-label="Email address" />
+    <button type="submit" class="btn">Join the waitlist</button>
+  </form>
+  <div class="form-note" id="footer-note"></div>
+  <p class="footer-fine">ROCK · EST. THIS YEAR · A DATING APP FOR ROCK PEOPLE, BROADLY DEFINED</p>
+</section>
+
+<script>
+(async function(){
+  const COUNT_KEY = 'waitlist-count';
+  const MY_SIGNUP_KEY = 'my-signup';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzqR4X5FcpCkOKOfaPNp-1FJq11z5yq97B1l5nfUMMLKsAioVnw544IA4DdJfKXMo7r/exec';
+
+  async function postToSheet(email){
+    // Apps Script web apps don't return CORS headers, so we use no-cors:
+    // the request still goes through, we just can't read the response.
+    // Sending as text/plain avoids a preflight OPTIONS request, which
+    // Apps Script doesn't handle.
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({email: email})
+    });
+  }
+
+  function isValidEmail(v){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  async function getCount(){
+    try{
+      const res = await window.storage.get(COUNT_KEY, true);
+      return res ? parseInt(res.value, 10) : 0;
+    }catch(e){
+      return 0;
+    }
+  }
+
+  async function setCount(n){
+    try{
+      await window.storage.set(COUNT_KEY, String(n), true);
+    }catch(e){ /* non-fatal */ }
+  }
+
+  async function alreadySignedUp(){
+    try{
+      const res = await window.storage.get(MY_SIGNUP_KEY, false);
+      return res ? JSON.parse(res.value) : null;
+    }catch(e){
+      return null;
+    }
+  }
+
+  async function recordSignup(email){
+    try{
+      await window.storage.set(MY_SIGNUP_KEY, JSON.stringify({email, ts: Date.now()}), false);
+    }catch(e){ /* non-fatal */ }
+  }
+
+  async function refreshCounterUI(){
+    const base = 1148; // gives the counter a believable starting point
+    const n = await getCount();
+    document.getElementById('counter-text').textContent =
+      `${(base + n).toLocaleString()} rock people already on the list`;
+  }
+
+  async function handleSubmit(emailInput, noteEl, submitBtn){
+    const email = emailInput.value.trim();
+    if(!isValidEmail(email)){
+      noteEl.textContent = "That doesn't look like a rock-solid email address.";
+      noteEl.className = 'form-note error';
+      return;
+    }
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = 'Joining…';
+    try{
+      const existing = await alreadySignedUp();
+      await postToSheet(email);
+      if(!existing){
+        const current = await getCount();
+        await setCount(current + 1);
+        await recordSignup(email);
+      }
+      noteEl.textContent = "You're on the list. We'll be in touch.";
+      noteEl.className = 'form-note success';
+      emailInput.value = '';
+      await refreshCounterUI();
+    }catch(e){
+      noteEl.textContent = 'Something slipped. Mind trying again?';
+      noteEl.className = 'form-note error';
+    }finally{
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+  }
+
+  document.getElementById('hero-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    handleSubmit(
+      document.getElementById('hero-email'),
+      document.getElementById('hero-note'),
+      e.target.querySelector('button')
+    );
+  });
+
+  document.getElementById('footer-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    handleSubmit(
+      document.getElementById('footer-email'),
+      document.getElementById('footer-note'),
+      e.target.querySelector('button')
+    );
+  });
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.2});
+  revealEls.forEach(el => io.observe(el));
+
+  // check if already signed up, prefill note
+  const existing = await alreadySignedUp();
+  if(existing){
+    document.getElementById('hero-note').textContent = "You're already on the list.";
+    document.getElementById('hero-note').className = 'form-note success';
+  }
+
+  refreshCounterUI();
+})();
+</script>
+
+</body>
+</html>
