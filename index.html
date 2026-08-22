@@ -168,13 +168,22 @@
     margin-top:26px;
     font-family:var(--font-mono);
     font-size:12.5px;
-    color:rgba(244,242,235,0.55);
-    display:flex;
+    color:rgba(244,242,235,0.7);
+    display:inline-flex;
     align-items:center;
     justify-content:center;
-    gap:8px;
+    gap:7px;
+    text-decoration:none;
+    padding:8px 16px;
+    border:1px solid rgba(244,242,235,0.2);
+    border-radius:100px;
+    transition:border-color 0.2s ease, color 0.2s ease;
   }
-  .counter .dot{width:6px; height:6px; border-radius:50%; background:var(--lichen); display:inline-block;}
+  .counter:hover{
+    color:var(--quartz-2);
+    border-color:rgba(244,242,235,0.4);
+  }
+  .counter .ig-icon{display:inline-flex;}
 
   /* ---------- STRATA SECTIONS ---------- */
   .stratum{
@@ -337,7 +346,16 @@
       <button type="submit" class="btn">Join the waitlist</button>
     </form>
     <div class="form-note" id="hero-note"></div>
-    <div class="counter" id="hero-counter"><span class="dot"></span><span id="counter-text">Loading rock people…</span></div>
+    <a class="counter" id="hero-counter" href="https://instagram.com/rockdatingapp" target="_blank" rel="noopener noreferrer">
+      <span class="ig-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="18" height="18" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </span>
+      <span>@rockdatingapp</span>
+    </a>
   </div>
 </section>
 
@@ -362,7 +380,7 @@
   <div class="stratum-inner" data-reveal>
     <span class="stratum-label">Layer 03 — Bouldering</span>
     <h2>Send it together</h2>
-    <p>Meet someone to share a chalk bag with. If scaling rocks is more of your thing instead, meet someone who loves to as well. Or, convert an open minded geologist.</p>
+    <p>Meet someone to share a chalk bag with. Sort by people with the same rock-related interest as you and find someone to climb with or convert an open minded geologist.</p>
   </div>
 </section>
 
@@ -370,7 +388,7 @@
   <div class="stratum-inner" data-reveal>
     <span class="stratum-label">Layer 04 — The Rest of the Rock Universe</span>
     <h2>Rockefeller Center. The Rockettes. Actual rockets. We don't judge.</h2>
-    <p>Not every rock person is a geologist. Some of you just really love a Christmas tree lighting, a kick line, or a good SpaceX launch stream. There's a layer for you too.</p>
+    <p>Not every rock person is a geologist. We welcome Rockefeller Center enthusiasts, rocket launch watchers, Houston Rockets fans, amateur earth-benders, Rockettes fans, and literally everyone into rocks in some form.</p>
     <div class="wildcard-grid">
       <span class="wildcard-item">🌲 Tree lighting traditionalists</span>
       <span class="wildcard-item">💃 Kick line enthusiasts</span>
@@ -447,13 +465,6 @@
     }catch(e){ /* non-fatal */ }
   }
 
-  async function refreshCounterUI(){
-    const base = 1148; // gives the counter a believable starting point
-    const n = await getCount();
-    document.getElementById('counter-text').textContent =
-      `${(base + n).toLocaleString()} rock people already on the list`;
-  }
-
   async function handleSubmit(emailInput, noteEl, submitBtn){
     const email = emailInput.value.trim();
     if(!isValidEmail(email)){
@@ -475,7 +486,6 @@
       noteEl.textContent = "You're on the list. We'll be in touch.";
       noteEl.className = 'form-note success';
       emailInput.value = '';
-      await refreshCounterUI();
     }catch(e){
       noteEl.textContent = 'Something slipped. Mind trying again?';
       noteEl.className = 'form-note error';
@@ -521,8 +531,6 @@
     document.getElementById('hero-note').textContent = "You're already on the list.";
     document.getElementById('hero-note').className = 'form-note success';
   }
-
-  refreshCounterUI();
 })();
 </script>
 
