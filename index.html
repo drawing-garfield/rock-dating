@@ -4,417 +4,715 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Rock — a dating app for rock people</title>
+<meta name="description" content="A dating app for rock people, broadly defined. Geology, punk rock, rocket launches, the Rockettes — if you like some sort of rock, there's a match for you. Join the waitlist." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@400;600;800;900&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rokkitt:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+  /* ============================================================
+     ROCK design-system tokens  (from rock-design-system-8beb22)
+     ============================================================ */
   :root{
-    --basalt:#26282A;
-    --basalt-2:#33363A;
-    --quartz:#EAE7DD;
-    --quartz-2:#F4F2EB;
-    --iron:#B54A32;
-    --iron-2:#8F3A27;
-    --mica:#C9962B;
-    --mica-2:#A87A1F;
-    --lichen:#6B7A4F;
-    --lichen-2:#54613E;
-    --ink:#20201E;
-    --paper:#F4F2EB;
-    --font-display:'Rokkitt', serif;
-    --font-body:'Work Sans', sans-serif;
-    --font-mono:'Space Mono', monospace;
+    /* named brand palette */
+    --rock-basalt:#26282A;
+    --rock-quartz:#EAE7DD;
+    --rock-iron:#B54A32;
+    --rock-mica:#C9962B;
+    --rock-lichen:#6B7A4F;
+    --rock-ink:#20201E;
+
+    /* basalt (dark stone) scale */
+    --basalt-900:#1B1D1F;
+    --basalt-800:#202224;
+    --basalt-700:#26282A;
+    --basalt-600:#2E3538;
+    --basalt-500:#33363A;
+    --basalt-400:#3D4146;
+    --basalt-300:#4B5055;
+
+    /* quartz (light stone) scale */
+    --quartz-050:#FBFAF6;
+    --quartz-100:#F4F2EB;
+    --quartz-200:#EAE7DD;
+    --quartz-300:#DFDBCD;
+    --quartz-400:#CDCBC4;
+    --quartz-500:#A6A49D;
+    --quartz-600:#7C7A73;
+
+    /* accent scales */
+    --iron-wash:#F2EAE2;
+    --iron-200:#E4BFB3;
+    --iron-400:#C96549;
+    --iron-500:#B54A32;
+    --iron-600:#9C3E2A;
+    --iron-700:#7E301F;
+
+    --mica-wash:#F6EDD8;
+    --mica-200:#E7C983;
+    --mica-400:#D6A63C;
+    --mica-500:#C9962B;
+    --mica-600:#A87A1E;
+
+    --lichen-wash:#EBEEE2;
+    --lichen-200:#B4BE9C;
+    --lichen-500:#6B7A4F;
+    --lichen-600:#55623E;
+
+    /* semantic — surfaces */
+    --surface-page:var(--quartz-100);
+    --surface-raised:var(--quartz-050);
+    --surface-sunken:var(--quartz-200);
+    --surface-card:var(--quartz-050);
+
+    /* semantic — text */
+    --text-body:var(--rock-ink);
+    --text-muted:#5C5A54;
+    --text-subtle:var(--quartz-600);
+    --text-inverse-muted:#9AA0A4;
+    --text-accent:var(--iron-500);
+    --text-on-accent:var(--quartz-050);
+    --text-link:var(--iron-600);
+    --text-link-hover:var(--iron-700);
+
+    /* semantic — borders / seams */
+    --border-hairline:#DCD8CB;
+    --border-strong:var(--quartz-400);
+    --border-inverse:#3A3E42;
+    --seam-color:var(--quartz-500);
+    --seam-color-inverse:var(--basalt-300);
+
+    --focus-ring:var(--mica-500);
+
+    /* type */
+    --font-display:"Rokkitt",Georgia,"Times New Roman",serif;
+    --font-body:"Work Sans",-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --font-mono:"Space Grotesk","Space Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+
+    --fw-regular:400;
+    --fw-medium:500;
+    --fw-semibold:600;
+    --fw-bold:700;
+    --fw-black:900;
+
+    --ls-display:-0.01em;
+    --ls-label:0.14em;
+
+    /* spacing / layout */
+    --content-max:1120px;
+    --gutter-lg:40px;
+    --band-pad-md:80px;
+
+    /* radii */
+    --radius-xs:3px;
+    --radius-sm:6px;
+    --radius-md:10px;
+    --radius-lg:14px;
+    --radius-xl:20px;
+    --radius-chip:999px;
+
+    /* shadows */
+    --shadow-xs:0 1px 0 rgba(32,32,30,.06);
+    --shadow-sm:0 1px 2px rgba(32,32,30,.08),0 1px 0 rgba(32,32,30,.04);
+    --shadow-inset:inset 0 1px 0 rgba(255,255,255,.5);
+
+    /* motion */
+    --ease-settle:cubic-bezier(.22,.61,.36,1);
+    --ease-standard:cubic-bezier(.4,0,.2,1);
+    --dur-fast:120ms;
+    --dur-slow:320ms;
+
+    /* signature motif: the fault line — strata bands displaced across a dashed mica seam */
+    --strata-img:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201200%20600%22%20preserveAspectRatio%3D%22xMidYMid%20slice%22%3E%3Crect%20width%3D%221200%22%20height%3D%22600%22%20fill%3D%22%2326282A%22%2F%3E%3Cg%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22560%22%20height%3D%2270%22%20fill%3D%22%232E3538%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%2270%22%20width%3D%22560%22%20height%3D%2255%22%20fill%3D%22%2333363A%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%22125%22%20width%3D%22560%22%20height%3D%2282%22%20fill%3D%22%23202224%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%22207%22%20width%3D%22560%22%20height%3D%2258%22%20fill%3D%22%232E3538%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%22265%22%20width%3D%22560%22%20height%3D%2296%22%20fill%3D%22%231B1D1F%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%22361%22%20width%3D%22560%22%20height%3D%2258%22%20fill%3D%22%2333363A%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%22419%22%20width%3D%22560%22%20height%3D%2284%22%20fill%3D%22%2326282A%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%22503%22%20width%3D%22560%22%20height%3D%22120%22%20fill%3D%22%23202224%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Crect%20x%3D%22560%22%20y%3D%2234%22%20width%3D%22640%22%20height%3D%2270%22%20fill%3D%22%232E3538%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22104%22%20width%3D%22640%22%20height%3D%2255%22%20fill%3D%22%2333363A%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22159%22%20width%3D%22640%22%20height%3D%2282%22%20fill%3D%22%23202224%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22241%22%20width%3D%22640%22%20height%3D%2258%22%20fill%3D%22%232E3538%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22299%22%20width%3D%22640%22%20height%3D%2296%22%20fill%3D%22%231B1D1F%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22395%22%20width%3D%22640%22%20height%3D%2258%22%20fill%3D%22%2333363A%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22453%22%20width%3D%22640%22%20height%3D%2284%22%20fill%3D%22%2326282A%22%2F%3E%3Crect%20x%3D%22560%22%20y%3D%22537%22%20width%3D%22640%22%20height%3D%22120%22%20fill%3D%22%23202224%22%2F%3E%3C%2Fg%3E%3Cline%20x1%3D%22560%22%20y1%3D%220%22%20x2%3D%22560%22%20y2%3D%22600%22%20stroke%3D%22%23C9962B%22%20stroke-width%3D%222%22%20stroke-dasharray%3D%224%207%22%20opacity%3D%220.5%22%2F%3E%3Ccircle%20cx%3D%22560%22%20cy%3D%2240%22%20r%3D%224%22%20fill%3D%22%23C9962B%22%20opacity%3D%220.8%22%2F%3E%3C%2Fsvg%3E");
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
+
+  /* dark ("basalt") surfaces — opt in with .rock-dark */
+  .rock-dark{
+    --surface-page:var(--rock-basalt);
+    --surface-raised:var(--basalt-600);
+    --surface-sunken:var(--basalt-900);
+    --surface-card:var(--basalt-600);
+    --text-body:var(--quartz-200);
+    --text-muted:#9AA0A4;
+    --text-subtle:#71777C;
+    --border-hairline:#33363A;
+    --border-strong:#4B5055;
+    --seam-color:var(--basalt-300);
+    --text-link:var(--iron-400);
+    --text-link-hover:var(--iron-200);
+  }
+
+  /* ============================================================
+     base
+     ============================================================ */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    font-family:var(--font-body);
-    background:var(--basalt);
-    color:var(--paper);
-    overflow-x:hidden;
+    font:var(--fw-regular) 16px/1.55 var(--font-body);
+    background:var(--quartz-100);
+    color:var(--text-body);
     -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
   }
-  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  a{color:var(--text-link);text-decoration:none;transition:color var(--dur-fast) var(--ease-standard);}
+  a:hover{color:var(--text-link-hover);}
+  section[id]{scroll-margin-top:78px;}
+  ::selection{background:var(--mica-200);color:var(--rock-ink);}
 
-  .eyebrow{
+  :focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px;border-radius:var(--radius-xs);}
+
+  .wrap{max-width:var(--content-max);margin:0 auto;padding-left:var(--gutter-lg);padding-right:var(--gutter-lg);}
+  .band{padding-top:var(--band-pad-md);padding-bottom:var(--band-pad-md);}
+
+  /* mono labels — specimen-catalog voice, tracked out, lowercase on this page */
+  .mono{font-family:var(--font-mono);letter-spacing:var(--ls-label);}
+  .label{
     font-family:var(--font-mono);
-    font-size:12px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    opacity:0.75;
+    font-size:11px;
+    line-height:1.3;
+    letter-spacing:var(--ls-label);
+    text-transform:lowercase;
+    color:var(--text-subtle);
+    display:inline-block;
   }
+  .label--accent{color:var(--text-accent);}
+  .label--onDark{color:var(--quartz-400);}
+  .label--mica{color:var(--mica-600);}
 
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative;
-    min-height:100svh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:80px 24px 120px;
-    background:
-      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(201,150,43,0.18), transparent 60%),
-      var(--basalt);
-    overflow:hidden;
-  }
-  .strata-bg{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    opacity:0.5;
-    z-index:0;
-  }
-  .hero-content{
-    position:relative;
-    z-index:2;
-    max-width:760px;
-  }
+  h1,h2,h3{font-family:var(--font-display);letter-spacing:var(--ls-display);line-height:1.08;}
+
+  /* ============================================================
+     components
+     ============================================================ */
+
+  /* wordmark — "ROCK." re-typeset in Rokkitt Black, period in iron red */
   .wordmark{
     font-family:var(--font-display);
     font-weight:900;
-    font-size:clamp(64px, 14vw, 148px);
-    line-height:0.92;
+    text-transform:uppercase;
     letter-spacing:-0.02em;
-    text-transform:uppercase;
-    color:var(--quartz-2);
-  }
-  .wordmark em{
-    font-style:italic;
-    color:var(--iron);
-  }
-  .tagline{
-    font-family:var(--font-body);
-    font-size:clamp(17px, 2.4vw, 21px);
-    font-weight:500;
-    max-width:520px;
-    margin:20px auto 0;
-    color:rgba(244,242,235,0.85);
-    line-height:1.5;
-  }
-  .rock-chips{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    justify-content:center;
-    max-width:600px;
-    margin:32px auto 0;
-  }
-  .rock-chip{
-    font-family:var(--font-mono);
-    font-size:11.5px;
-    letter-spacing:0.04em;
-    padding:6px 12px;
-    border:1px solid rgba(244,242,235,0.25);
-    border-radius:100px;
-    color:rgba(244,242,235,0.8);
+    line-height:0.9;
+    color:var(--quartz-050);
     white-space:nowrap;
   }
+  .wordmark .dot{color:var(--rock-iron);}
+  .wordmark--ink{color:var(--rock-ink);}
+  .wordmark--sm{font-size:26px;}
+  .wordmark--md{font-size:34px;}
+  .wordmark--lg{font-size:clamp(52px,9vw,64px);}
 
-  .waitlist-form{
-    margin:44px auto 0;
-    display:flex;
-    gap:10px;
-    max-width:420px;
-    width:100%;
-  }
-  .waitlist-form input[type="email"]{
-    flex:1;
-    min-width:0;
-    padding:15px 18px;
-    border-radius:8px;
-    border:1.5px solid rgba(244,242,235,0.2);
-    background:rgba(244,242,235,0.06);
-    color:var(--paper);
-    font-family:var(--font-body);
-    font-size:15px;
-    outline:none;
-    transition:border-color 0.2s ease, background 0.2s ease;
-  }
-  .waitlist-form input[type="email"]::placeholder{color:rgba(244,242,235,0.4);}
-  .waitlist-form input[type="email"]:focus{
-    border-color:var(--mica);
-    background:rgba(244,242,235,0.1);
-  }
+  /* button */
   .btn{
-    font-family:var(--font-body);
-    font-weight:600;
-    font-size:15px;
-    padding:15px 22px;
-    border-radius:8px;
-    border:none;
-    background:var(--iron);
-    color:var(--quartz-2);
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font:var(--fw-semibold) 15px/1.1 var(--font-body);
+    padding:12px 20px;min-height:44px;
+    border:1px solid transparent;border-radius:var(--radius-sm);
+    cursor:pointer;white-space:nowrap;
+    transition:background var(--dur-fast) var(--ease-standard),color var(--dur-fast) var(--ease-standard),transform var(--dur-fast) var(--ease-standard);
+  }
+  .btn--primary{background:var(--iron-500);color:var(--text-on-accent);}
+  .btn--primary:hover{background:var(--iron-600);}
+  .btn--primary:active{background:var(--iron-700);transform:translateY(1px);box-shadow:var(--shadow-inset);}
+  .btn--inverse{background:var(--quartz-200);color:var(--rock-ink);}
+  .btn--inverse:hover{background:var(--quartz-050);}
+  .btn--inverse:active{background:var(--quartz-300);transform:translateY(1px);box-shadow:var(--shadow-inset);}
+  .btn--lg{font-size:17px;padding:15px 26px;min-height:52px;}
+  .btn[disabled]{background:var(--quartz-400);color:var(--text-subtle);cursor:not-allowed;transform:none;}
+
+  /* input */
+  .input{
+    font:var(--fw-regular) 16px/1.4 var(--font-body);
+    color:var(--text-body);
+    background:var(--surface-raised);
+    border:1px solid var(--border-strong);
+    border-radius:var(--radius-sm);
+    padding:12px 14px;width:100%;
+    box-shadow:var(--shadow-inset);
+    transition:border-color var(--dur-fast) var(--ease-standard);
+  }
+  .input:focus{outline:2px solid var(--focus-ring);outline-offset:2px;border-color:var(--basalt-500);}
+  .input--dark{
+    background:var(--basalt-800);
+    border-color:var(--border-inverse);
+    color:var(--quartz-050);
+    min-height:50px;box-shadow:none;
+  }
+  .input--dark::placeholder{color:var(--text-inverse-muted);}
+
+  /* badge */
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;
+    font:var(--fw-bold) 11px/1.3 var(--font-mono);
+    letter-spacing:var(--ls-label);text-transform:uppercase;
+    border-radius:var(--radius-chip);padding:4px 10px;
+  }
+  .badge--lichen{background:var(--lichen-wash);color:var(--lichen-600);border:1px solid var(--lichen-200);}
+
+  /* chip */
+  .chip{
+    font:var(--fw-medium) 14px/1 var(--font-body);
+    padding:9px 14px;min-height:36px;
+    background:var(--surface-card);color:var(--text-body);
+    border:1px solid var(--border-hairline);border-radius:var(--radius-chip);
     cursor:pointer;
-    white-space:nowrap;
-    transition:transform 0.15s ease, background 0.15s ease;
+    transition:background var(--dur-fast) var(--ease-standard),border-color var(--dur-fast) var(--ease-standard),color var(--dur-fast) var(--ease-standard);
   }
-  .btn:hover{background:var(--iron-2); transform:translateY(-1px);}
-  .btn:active{transform:translateY(0);}
-  .btn:focus-visible, input:focus-visible{outline:2px solid var(--mica); outline-offset:2px;}
+  .chip[aria-pressed="true"]{background:var(--iron-wash);color:var(--iron-600);border-color:var(--iron-500);}
+  .chip--dark{background:transparent;color:var(--quartz-200);border-color:var(--border-inverse);}
+  .chip--dark[aria-pressed="true"]{background:var(--basalt-700);color:var(--quartz-050);border-color:var(--iron-500);}
 
+  /* segmented control */
+  .segmented{
+    display:inline-flex;gap:3px;padding:3px;width:100%;
+    background:var(--surface-sunken);
+    border:1px solid var(--border-hairline);border-radius:var(--radius-md);
+  }
+  .segmented button{
+    flex:1;
+    font:var(--fw-semibold) 14px/1 var(--font-body);
+    padding:9px 12px;min-height:38px;cursor:pointer;
+    background:transparent;color:var(--text-muted);
+    border:1px solid transparent;border-radius:var(--radius-sm);
+    transition:background var(--dur-fast) var(--ease-standard),color var(--dur-fast) var(--ease-standard);
+  }
+  .segmented button[aria-selected="true"]{
+    background:var(--surface-raised);color:var(--text-body);
+    border-color:var(--border-hairline);box-shadow:var(--shadow-xs);
+  }
+
+  /* seam — the fault line: dashed, with a mica contact dot */
+  .seam{position:relative;align-self:stretch;border-left:1px dashed var(--seam-color-inverse);width:0;min-height:24px;}
+  .seam .seam-dot{position:absolute;width:7px;height:7px;border-radius:999px;background:var(--rock-mica);left:-4px;top:50%;margin-top:-3.5px;}
+
+  /* photo slot — shows a basalt block behind if the image is missing */
+  .ph{
+    position:relative;overflow:hidden;
+    background:var(--rock-basalt) var(--strata-img) center/cover no-repeat;
+    border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+  }
+  .ph img{width:100%;height:100%;object-fit:cover;}
+
+  .field-note{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:var(--ls-label);
+    text-transform:lowercase;color:var(--text-subtle);margin-top:10px;
+  }
+
+  /* form + form note */
+  .waitlist-form{display:flex;gap:10px;align-items:flex-start;}
+  .waitlist-form .grow{flex:1;min-width:0;}
   .form-note{
-    font-family:var(--font-mono);
-    font-size:12px;
-    margin-top:14px;
-    color:rgba(244,242,235,0.55);
-    min-height:16px;
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.02em;text-transform:lowercase;
+    margin-top:12px;min-height:16px;color:var(--text-subtle);
   }
-  .form-note.success{color:var(--mica);}
-  .form-note.error{color:var(--iron);}
+  .form-note.error{color:var(--iron-500);}
+  .form-note.success{color:var(--lichen-600);}
+  [hidden]{display:none!important;}
 
-  .counter{
-    margin-top:26px;
-    font-family:var(--font-mono);
-    font-size:12.5px;
-    color:rgba(244,242,235,0.7);
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:7px;
-    text-decoration:none;
-    padding:8px 16px;
-    border:1px solid rgba(244,242,235,0.2);
-    border-radius:100px;
-    transition:border-color 0.2s ease, color 0.2s ease;
-  }
-  .counter:hover{
-    color:var(--quartz-2);
-    border-color:rgba(244,242,235,0.4);
-  }
-  .counter .ig-icon{display:inline-flex;}
+  @keyframes rockSettle{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  .settle{animation:rockSettle var(--dur-slow) var(--ease-settle) both;}
 
-  /* ---------- STRATA SECTIONS ---------- */
-  .stratum{
-    position:relative;
-    padding:110px 24px 130px;
-    clip-path:polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%);
-    margin-top:-2px;
-  }
-  .stratum-inner{
-    max-width:680px;
-    margin:0 auto;
-    position:relative;
-    z-index:1;
-    opacity:0;
-    transform:translateY(24px);
-    transition:opacity 0.7s ease, transform 0.7s ease;
-  }
-  .stratum-inner.visible{opacity:1; transform:translateY(0);}
+  [data-reveal]{opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease-settle),transform .6s var(--ease-settle);}
+  [data-reveal].revealed{opacity:1;transform:none;}
 
-  .stratum-label{
-    font-family:var(--font-mono);
-    font-size:12px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    opacity:0.65;
-    margin-bottom:14px;
-    display:block;
+  /* ============================================================
+     header
+     ============================================================ */
+  .site-header{
+    position:sticky;top:0;z-index:30;
+    background:var(--rock-basalt);border-bottom:1px solid var(--border-inverse);
   }
-  .stratum h2{
-    font-family:var(--font-display);
-    font-weight:800;
-    font-size:clamp(30px, 4.5vw, 46px);
-    line-height:1.08;
-    margin-bottom:18px;
+  .site-header .wrap{
+    display:flex;align-items:center;gap:28px;
+    padding-top:14px;padding-bottom:14px;
   }
-  .stratum p{
-    font-size:17px;
-    line-height:1.65;
-    max-width:520px;
-    opacity:0.92;
+  .site-nav{display:flex;gap:22px;margin-left:8px;flex:1;}
+  .site-nav a{font:var(--fw-medium) 15px/1 var(--font-body);color:var(--quartz-200);}
+  .site-nav a:hover{color:var(--rock-mica);}
+
+  /* ============================================================
+     hero
+     ============================================================ */
+  .hero{
+    position:relative;min-height:660px;display:grid;align-items:end;
+    background:
+      radial-gradient(ellipse 900px 520px at 50% -10%, rgba(201,150,43,0.14), transparent 60%),
+      var(--rock-basalt);
+    background-size:cover;background-position:center 30%;
+  }
+  .hero.has-photo{background:var(--rock-basalt) center 30%/cover no-repeat;}
+  .hero .scrim{
+    position:absolute;inset:0;
+    background:linear-gradient(to top, rgba(38,40,42,0.94) 0%, rgba(38,40,42,0.72) 42%, rgba(38,40,42,0.28) 100%);
+  }
+  .hero .hero-inner{
+    position:relative;width:100%;max-width:var(--content-max);margin:0 auto;
+    padding:120px var(--gutter-lg) 64px;
+  }
+  .hero h1{
+    font-weight:900;font-size:clamp(56px,8vw,116px);line-height:1.02;letter-spacing:-0.02em;
+    color:var(--quartz-050);margin:16px 0 20px;max-width:15ch;
+  }
+  .hero p.lede{
+    font:var(--fw-regular) 21px/1.5 var(--font-body);
+    color:var(--quartz-200);max-width:44ch;margin:0 0 32px;
+  }
+  .hero .waitlist-form{max-width:520px;}
+
+  .sent-state{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .sent-state p{font:var(--fw-regular) 17px/1.6 var(--font-body);color:var(--quartz-200);margin:0;}
+
+  /* ============================================================
+     quiz
+     ============================================================ */
+  #quiz .wrap{display:grid;grid-template-columns:1.15fr 0.85fr;gap:48px;align-items:center;}
+  #quiz h2{font-weight:700;font-size:clamp(34px,4vw,52px);line-height:1.06;color:var(--rock-ink);margin:12px 0 16px;max-width:20ch;}
+  #quiz p.body{font:var(--fw-regular) 18px/1.6 var(--font-body);color:var(--text-muted);max-width:52ch;margin:0 0 14px;}
+  #quiz p.body + p.body{margin-bottom:26px;}
+
+  .quiz-card{
+    border:1px solid var(--border-hairline);border-radius:var(--radius-lg);
+    background:var(--surface-card);box-shadow:var(--shadow-sm);padding:22px;
+  }
+  .quiz-card .card-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px;}
+  .quiz-card h3{font-weight:700;font-size:26px;line-height:1.15;color:var(--rock-ink);margin:0 0 16px;}
+  .quiz-card .blurb{font:var(--fw-regular) 17px/1.6 var(--font-body);color:var(--text-body);margin:18px 0 0;}
+
+  .figure .cap{font-family:var(--font-mono);font-size:10px;letter-spacing:var(--ls-label);text-transform:lowercase;color:var(--text-subtle);margin-top:10px;}
+
+  /* ============================================================
+     algorithm (dark)
+     ============================================================ */
+  #algorithm{position:relative;background:var(--rock-basalt);}
+  #algorithm .strata{
+    position:absolute;inset:0;opacity:0.18;
+    background:var(--rock-basalt) var(--strata-img) center/cover no-repeat;
+  }
+  #algorithm .tint{position:absolute;inset:0;background:linear-gradient(rgba(38,40,42,0.78),rgba(38,40,42,0.78));}
+  #algorithm .wrap{position:relative;}
+  #algorithm h2{font-weight:700;font-size:clamp(34px,4vw,52px);line-height:1.06;color:var(--quartz-050);margin:12px 0 18px;max-width:24ch;}
+  #algorithm p.intro{font:var(--fw-regular) 18px/1.6 var(--font-body);color:var(--text-inverse-muted);max-width:60ch;margin:0 0 44px;}
+
+  .axes{display:grid;grid-template-columns:1fr auto 1fr;gap:40px;align-items:stretch;}
+  .axis h3{font-weight:700;font-size:28px;line-height:1.15;color:var(--quartz-050);margin:10px 0 12px;}
+  .axis p{font:var(--fw-regular) 16px/1.6 var(--font-body);color:var(--text-inverse-muted);margin:0 0 18px;}
+  .axis .label{color:var(--mica-400);}
+
+  .pace-row{
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:13px 0;border-top:1px solid var(--border-inverse);
+  }
+  .pace-row .pair{font:var(--fw-medium) 16px/1.4 var(--font-body);color:var(--quartz-200);}
+  .pace-row .note{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;color:var(--quartz-400);}
+
+  .chip-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+
+  .compat-card{
+    border:1px solid var(--border-inverse);border-radius:var(--radius-xl);
+    background:var(--basalt-800);padding:24px;box-shadow:var(--shadow-sm);
+  }
+  .compat-bars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .compat-bars span{height:12px;border-radius:var(--radius-sm);background:rgba(234,231,221,.14);transition:background var(--dur-slow) var(--ease-settle);}
+  .compat-label{
+    font-family:var(--font-mono);font-size:11px;letter-spacing:var(--ls-label);text-transform:lowercase;
+    color:var(--quartz-400);margin-top:12px;
+  }
+  .compat-reasons{display:flex;flex-direction:column;gap:14px;margin-top:20px;}
+  .compat-reasons .r{display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:start;}
+  .compat-reasons .r .tick{font-family:var(--font-mono);font-size:13px;color:var(--rock-lichen);line-height:1.5;}
+  .compat-reasons .r .txt{font:var(--fw-regular) 16px/1.5 var(--font-body);color:var(--quartz-200);}
+
+  /* ============================================================
+     interests
+     ============================================================ */
+  #interests{background:var(--quartz-200);}
+  #interests .wrap{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:56px;align-items:start;}
+  #interests .col-left{display:flex;flex-direction:column;gap:24px;}
+  #interests h2{font-weight:700;font-size:clamp(30px,3.4vw,44px);line-height:1.06;color:var(--rock-ink);margin:12px 0 14px;}
+  #interests p.body{font:var(--fw-regular) 17px/1.6 var(--font-body);color:var(--text-muted);margin:0;}
+
+  .igroups{border-top:1px solid var(--border-hairline);}
+  .igroup{
+    display:grid;grid-template-columns:44px minmax(0,1fr);gap:18px;align-items:start;
+    padding:20px 8px 20px 0;border-bottom:1px solid var(--border-hairline);
+    transition:background 140ms ease;
+  }
+  .igroup:hover{background:var(--quartz-100);}
+  .igroup .n{font-family:var(--font-mono);font-size:11px;letter-spacing:var(--ls-label);color:var(--text-accent);padding-top:7px;}
+  .igroup h3{font-weight:700;font-size:clamp(21px,2vw,27px);line-height:1.12;color:var(--rock-ink);margin:0 0 7px;}
+  .igroup p{font:var(--fw-regular) 16px/1.55 var(--font-body);color:var(--text-muted);margin:0;max-width:56ch;}
+
+  /* ============================================================
+     faq
+     ============================================================ */
+  #faq .wrap{display:grid;grid-template-columns:320px 1fr;gap:48px;}
+  #faq h2{font-weight:700;font-size:clamp(30px,3.4vw,44px);line-height:1.06;color:var(--rock-ink);margin:12px 0 0;max-width:14ch;}
+  .faq-item{padding:22px 0;border-top:1px solid var(--border-hairline);}
+  .faq-item h3{font-weight:700;font-size:22px;line-height:1.2;color:var(--rock-ink);margin:0 0 8px;}
+  .faq-item p{font:var(--fw-regular) 17px/1.6 var(--font-body);color:var(--text-muted);margin:0;max-width:62ch;}
+
+  /* ============================================================
+     waitlist CTA
+     ============================================================ */
+  #waitlist{background:var(--quartz-200);border-top:1px solid var(--border-hairline);}
+  #waitlist .wrap{max-width:720px;text-align:center;}
+  #waitlist h2{font-weight:900;font-size:clamp(38px,5vw,64px);line-height:1.04;letter-spacing:-0.02em;color:var(--rock-ink);margin:24px 0 14px;}
+  #waitlist p.body{font:var(--fw-regular) 18px/1.6 var(--font-body);color:var(--text-muted);margin:0 auto 28px;max-width:46ch;}
+  #waitlist .waitlist-form{max-width:480px;margin:0 auto;text-align:left;}
+  #waitlist .wordmark{margin:0 auto;}
+  #waitlist .sent-state{flex-direction:column;justify-content:center;}
+  #waitlist .form-note{justify-content:center;}
+
+  /* ============================================================
+     footer
+     ============================================================ */
+  .site-footer{background:var(--basalt-900);padding:52px var(--gutter-lg) 28px;}
+  .site-footer .inner{max-width:var(--content-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;}
+  .site-footer .tagline{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:var(--ls-label);text-transform:lowercase;
+    color:#71777C;line-height:1.7;text-align:center;
+  }
+  .site-footer .fine{
+    max-width:var(--content-max);margin:34px auto 0;padding-top:18px;
+    border-top:1px dashed var(--basalt-300);
+    display:flex;justify-content:center;
+  }
+  .site-footer .fine span{
+    font-family:var(--font-mono);font-size:10px;letter-spacing:var(--ls-label);text-transform:lowercase;color:#71777C;
   }
 
-  .stratum--iron{background:var(--iron); color:var(--quartz-2);}
-  .stratum--mica{background:var(--mica); color:var(--ink);}
-  .stratum--lichen{background:var(--lichen); color:var(--quartz-2);}
-  .stratum--quartz{background:var(--quartz); color:var(--ink);}
-
-  .specimen-tag{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-family:var(--font-mono);
-    font-size:11.5px;
-    letter-spacing:0.04em;
-    margin-top:26px;
-    padding:8px 14px;
-    border-radius:100px;
-    border:1px solid currentColor;
-    opacity:0.65;
+  /* ============================================================
+     responsive
+     ============================================================ */
+  @media (max-width:900px){
+    #quiz .wrap,#interests .wrap{grid-template-columns:1fr;gap:36px;}
+    .axes{grid-template-columns:1fr;gap:32px;}
+    .axes .seam{display:none;}
   }
-
-  .wildcard-grid{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:24px;
+  @media (max-width:860px){
+    .site-nav{display:none;}
   }
-  .wildcard-item{
-    font-family:var(--font-mono);
-    font-size:12.5px;
-    padding:9px 14px;
-    background:rgba(32,32,30,0.06);
-    border-radius:6px;
+  @media (max-width:760px){
+    #faq .wrap{grid-template-columns:1fr;gap:24px;}
+    :root{--band-pad-md:64px;--gutter-lg:24px;}
+    .hero .hero-inner{padding:96px 24px 56px;}
   }
-
-  /* ---------- FOOTER CTA ---------- */
-  .footer-cta{
-    background:var(--basalt-2);
-    padding:120px 24px 60px;
-    text-align:center;
-    clip-path:polygon(0 3.5vw, 100% 0, 100% 100%, 0 100%);
-    margin-top:-2px;
-  }
-  .footer-cta h2{
-    font-family:var(--font-display);
-    font-weight:800;
-    font-size:clamp(28px, 4vw, 40px);
-    max-width:520px;
-    margin:0 auto 14px;
-  }
-  .footer-cta p{
-    color:rgba(244,242,235,0.7);
-    max-width:440px;
-    margin:0 auto;
-    font-size:15.5px;
-    line-height:1.5;
-  }
-  .footer-cta .waitlist-form{margin-top:36px;}
-  .footer-fine{
-    margin-top:70px;
-    font-family:var(--font-mono);
-    font-size:11px;
-    color:rgba(244,242,235,0.4);
-    letter-spacing:0.03em;
-  }
-
-  @media (max-width:520px){
+  @media (max-width:560px){
     .waitlist-form{flex-direction:column;}
-    .stratum{padding:80px 20px 90px;}
-    .hero{padding:60px 20px 90px;}
+    .waitlist-form .btn{width:100%;}
+    .hero{min-height:0;}
   }
-
-  @media (prefers-reduced-motion: reduce){
-    .stratum-inner{transition:none; opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
+    .settle{animation:none;}
+    [data-reveal]{opacity:1;transform:none;transition:none;}
+    .compat-bars span{transition:none;}
   }
 </style>
 </head>
 <body>
 
-<section class="hero">
-  <svg class="strata-bg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <!-- left block of strata -->
-    <g>
-      <rect x="0" y="520" width="560" height="60" fill="#33363A"/>
-      <rect x="0" y="580" width="560" height="50" fill="#3D4044"/>
-      <rect x="0" y="630" width="560" height="70" fill="#2E3538"/>
-      <rect x="0" y="700" width="560" height="100" fill="#252A2C"/>
-    </g>
-    <!-- fault line displacement -->
-    <g transform="translate(560,0)">
-      <rect x="0" y="480" width="640" height="60" fill="#33363A"/>
-      <rect x="0" y="540" width="640" height="50" fill="#3D4044"/>
-      <rect x="0" y="590" width="640" height="70" fill="#2E3538"/>
-      <rect x="0" y="660" width="640" height="140" fill="#252A2C"/>
-    </g>
-    <line x1="560" y1="480" x2="560" y2="800" stroke="#C9962B" stroke-width="2" opacity="0.5" stroke-dasharray="4 6"/>
-    <circle cx="560" cy="500" r="4" fill="#C9962B" opacity="0.8"/>
-  </svg>
+<header class="site-header rock-dark">
+  <div class="wrap">
+    <a href="#top" aria-label="ROCK home"><span class="wordmark wordmark--sm">Rock<span class="dot">.</span></span></a>
+    <nav class="site-nav">
+      <a href="#quiz">The quiz</a>
+      <a href="#algorithm">How matching works</a>
+      <a href="#interests">Interests</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#waitlist"><span class="btn btn--inverse">Join the waitlist</span></a>
+  </div>
+</header>
 
-  <div class="hero-content">
-    <span class="eyebrow">Now accepting geologists, guitarists &amp; gym rats</span>
-    <h1 class="wordmark" style="margin-top:18px;">Rock<em>.</em></h1>
-    <p class="tagline">A dating app for people who are, in some way, deeply into rocks. Geology, rock music, bouldering, Rockefeller Center, the Rockettes, rockets — if it's rock-adjacent, so is your match.</p>
+<main id="top">
 
-    <div class="rock-chips">
-      <span class="rock-chip">Geology</span>
-      <span class="rock-chip">Rock Music</span>
-      <span class="rock-chip">Bouldering</span>
-      <span class="rock-chip">Rockefeller Center</span>
-      <span class="rock-chip">The Rockettes</span>
-      <span class="rock-chip">Rockets</span>
-      <span class="rock-chip">Rock Bending</span>
-      <span class="rock-chip">Pop Rocks</span>
-      <span class="rock-chip">Dwayne "The Rock" Johnson</span>
+  <!-- ================= HERO ================= -->
+  <section class="hero rock-dark" id="hero">
+    <div class="scrim"></div>
+    <div class="hero-inner">
+      <span class="label label--onDark">Specimen: waitlist, open now</span>
+      <h1>Send it together.</h1>
+      <p class="lede">A dating app for rock people, broadly defined. Whether you're into geology, punk rock, rocket launches, or the rockettes — as long as you like some sort of rock, there's a match for you.</p>
+
+      <form class="waitlist-form js-form" data-form="hero" novalidate>
+        <div class="grow">
+          <input class="input input--dark" type="email" name="email" placeholder="you@example.com" aria-label="Email address" required />
+          <div class="field-note">One email at launch. No newsletter.</div>
+          <div class="form-note" role="status" aria-live="polite"></div>
+        </div>
+        <button type="submit" class="btn btn--inverse btn--lg">Join the waitlist</button>
+      </form>
+
+      <div class="sent-state js-sent settle" hidden>
+        <span class="badge badge--lichen">On the list</span>
+        <p class="js-sent-note"></p>
+      </div>
     </div>
+  </section>
 
-    <form class="waitlist-form" id="hero-form">
-      <input type="email" id="hero-email" placeholder="you@example.com" required aria-label="Email address" />
-      <button type="submit" class="btn">Join the waitlist</button>
-    </form>
-    <div class="form-note" id="hero-note"></div>
-    <a class="counter" id="hero-counter" href="https://instagram.com/rockdatingapp" target="_blank" rel="noopener noreferrer">
-      <span class="ig-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="3" y="3" width="18" height="18" rx="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/>
-        </svg>
-      </span>
-      <span>@rockdatingapp</span>
-    </a>
-  </div>
-</section>
+  <!-- ================= QUIZ ================= -->
+  <section class="band" id="quiz">
+    <div class="wrap">
+      <div data-reveal>
+        <span class="label label--accent">Specimen: rock type compatibility quiz</span>
+        <h2>Three layers, five minutes, real results.</h2>
+        <p class="body">Our concept may be silly, but our goals for your next relationship aren't. That's why, before you even worry about which photos to upload, there's a short quiz to determine your relationship style. It returns with three rock types: igneous, sedimentary, and metamorphic.</p>
+        <p class="body">Then, we show you matches with types that are compatible with your own — that way you don't waste your time with someone who's trying to launch while you're still building your propellant tanks, or vice-versa.</p>
 
-<section class="stratum stratum--iron">
-  <div class="stratum-inner" data-reveal>
-    <span class="stratum-label">Layer 01 — Igneous, Sedimentary, or Metamorphic</span>
-    <h2>Learn your rock type</h2>
-    <p>Through an easy quiz, learn your rock relationship type: sedimentary, igneous or metamorphic. Then, on the app, sort by compatible rock types.</p>
-    <span class="specimen-tag">SPECIMEN: compatibility quiz, coming soon</span>
-  </div>
-</section>
+        <div class="quiz-card">
+          <div class="card-head">
+            <span class="label">Layer 1 of 3</span>
+            <span class="label label--mica">Try it</span>
+          </div>
+          <h3>Pick your formation.</h3>
+          <div class="segmented" id="formation" role="tablist" aria-label="Rock formation">
+            <button type="button" role="tab" data-formation="Sedimentary" aria-selected="false">Sedimentary</button>
+            <button type="button" role="tab" data-formation="Igneous" aria-selected="true">Igneous</button>
+            <button type="button" role="tab" data-formation="Metamorphic" aria-selected="false">Metamorphic</button>
+          </div>
+          <p class="blurb" id="formationBlurb">When you know you know. Ready to dive into something new.</p>
+        </div>
+      </div>
 
-<section class="stratum stratum--mica">
-  <div class="stratum-inner" data-reveal>
-    <span class="stratum-label">Layer 02 — Rock Music</span>
-    <h2>Find someone who rocks out</h2>
-    <p>Filter by music taste and find the perfect right person to come to the next underground show. Classic rock, punk, alternative, progressive and metal are all represented on the app.</p>
-  </div>
-</section>
-
-<section class="stratum stratum--lichen">
-  <div class="stratum-inner" data-reveal>
-    <span class="stratum-label">Layer 03 — Bouldering</span>
-    <h2>Send it together</h2>
-    <p>Meet someone to share a chalk bag with. Sort by people with the same rock-related interest as you and find someone to climb with or convert an open minded geologist.</p>
-  </div>
-</section>
-
-<section class="stratum stratum--quartz">
-  <div class="stratum-inner" data-reveal>
-    <span class="stratum-label">Layer 04 — The Rest of the Rock Universe</span>
-    <h2>Rockefeller Center. The Rockettes. Actual rockets. We don't judge.</h2>
-    <p>Not every rock person is a geologist. We welcome Rockefeller Center enthusiasts, rocket launch watchers, Houston Rockets fans, amateur earth-benders, Rockettes fans, and literally everyone into rocks in some form.</p>
-    <div class="wildcard-grid">
-      <span class="wildcard-item">Tree lighting traditionalists</span>
-      <span class="wildcard-item">Kick line enthusiasts</span>
-      <span class="wildcard-item">Launch-day watchers</span>
-      <span class="wildcard-item">Ice rink romantics</span>
-      <span class="wildcard-item">Rock benders</span>
-      <span class="wildcard-item">Pop rock snackers</span>
-      <span class="wildcard-item">Dwayne "The Rock" Johnson stans</span>
+      <div class="figure" data-reveal>
+        <div class="ph" style="height:620px;">
+          <img src="IMG_3400.JPG" alt="Two people on a rope swing in a flooded cave" onerror="this.remove()" />
+        </div>
+        <div class="cap">Field note — limestone karst, matched on caving</div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="footer-cta">
-  <h2>Your future rock partner is out there.</h2>
-  <p>Get early access when we launch. No spam, no pebbles — just one email when it's your turn.</p>
-  <form class="waitlist-form" id="footer-form" style="margin-left:auto; margin-right:auto;">
-    <input type="email" id="footer-email" placeholder="you@example.com" required aria-label="Email address" />
-    <button type="submit" class="btn">Join the waitlist</button>
-  </form>
-  <div class="form-note" id="footer-note"></div>
-  <p class="footer-fine">ROCK · EST. THIS YEAR · A DATING APP FOR ROCK PEOPLE, BROADLY DEFINED</p>
-</section>
+  <!-- ================= ALGORITHM ================= -->
+  <section class="band rock-dark" id="algorithm">
+    <div class="strata" aria-hidden="true"></div>
+    <div class="tint" aria-hidden="true"></div>
+    <div class="wrap">
+      <div data-reveal>
+        <span class="label label--onDark">How matching works</span>
+        <h2>Needs and wants, both valued.</h2>
+        <p class="intro">Most apps score one thing. ROCK scores two and only connects people where both hold: your dating type — the formation the quiz gave you — and your rock interests.</p>
+      </div>
+
+      <div class="axes">
+        <div class="axis settle">
+          <span class="label">Axis 01 — dating type</span>
+          <h3>Formation compatibility</h3>
+          <p>Your quiz result is a pace, not a personality. Sedimentary wants to build slowly. Igneous wants to go now. Metamorphic has been changed by pressure and is fine about it. Some pairs hold, some shear.</p>
+          <div>
+            <div class="pace-row"><span class="pair">Sedimentary + metamorphic</span><span class="note">Holds</span></div>
+            <div class="pace-row"><span class="pair">Igneous + igneous</span><span class="note">Holds, loudly</span></div>
+            <div class="pace-row"><span class="pair">Igneous + sedimentary</span><span class="note">Shears</span></div>
+            <div class="pace-row"><span class="pair">Metamorphic + anything</span><span class="note">Usually holds</span></div>
+          </div>
+        </div>
+
+        <div class="seam" role="separator" aria-orientation="vertical"><span class="seam-dot"></span></div>
+
+        <div class="axis settle">
+          <span class="label">Axis 02 — interests</span>
+          <h3>Seam overlap</h3>
+          <p>You tell us what you're into and what you're open to. Every profile you see displays a four-layered compatibility strength metric, based on quiz answers.</p>
+          <div class="chip-cloud" id="chipCloud"></div>
+          <div class="compat-card">
+            <div class="compat-bars" id="compatBars">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="compat-label" id="compatLabel">compatibility · 2 of 4 layers</div>
+            <div class="compat-reasons" id="compatReasons"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INTERESTS ================= -->
+  <section class="band" id="interests">
+    <div class="wrap">
+      <div class="col-left" data-reveal>
+        <div>
+          <span class="label">Interests represented</span>
+          <h2>Broadly defined, and we mean it.</h2>
+          <p class="body">Nine families of rock interest, each with its own sub-tags. You pick up to twelve. Nobody has to explain what a nickpoint is on a first date.</p>
+        </div>
+        <div class="ph" style="height:260px;">
+          <img src="IMG_2886.JPG" alt="Bedroom wall covered in show posters, a bass guitar and a lava lamp" style="object-position:center 40%;" onerror="this.remove()" />
+        </div>
+        <div class="ph" style="height:320px;">
+          <img src="IMG_0924.JPEG" alt="Two people at a co-op house show" style="object-position:center 72%;" onerror="this.remove()" />
+        </div>
+      </div>
+
+      <div class="igroups" data-reveal>
+        <div class="igroup"><span class="n">01</span><div><h3>Rock music</h3><p>Punk, classic, shoegaze, and co-op parties.</p></div></div>
+        <div class="igroup"><span class="n">02</span><div><h3>Bouldering and climbing</h3><p>Highballs, slab, and the specific silence before a crux.</p></div></div>
+        <div class="igroup"><span class="n">03</span><div><h3>Geology and field work</h3><p>Mapping, thin sections, and arguing about a contact for an hour.</p></div></div>
+        <div class="igroup"><span class="n">04</span><div><h3>Pop rock: Rockefeller, Rockettes, the Rock</h3><p>Anything rock-adjacent by name. The pun counts.</p></div></div>
+        <div class="igroup"><span class="n">05</span><div><h3>Earth-bending and tabletop games</h3><p>Campaigns, dice trays, and moving stone with your mind.</p></div></div>
+        <div class="igroup"><span class="n">06</span><div><h3>Cave exploring</h3><p>Karst, cold water, and a rope swing in the dark.</p></div></div>
+        <div class="igroup"><span class="n">07</span><div><h3>Gravel and off-roading</h3><p>Loose surfaces, long descents, and questionable tire choices.</p></div></div>
+        <div class="igroup"><span class="n">08</span><div><h3>Rock salt and cooking</h3><p>Salt blocks, brines, and food cooked directly on stone.</p></div></div>
+        <div class="igroup"><span class="n">09</span><div><h3>Gemstones and crystals</h3><p>Cabbing, tumbling, specimen trays, and the UV shelf at midnight.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="band" id="faq">
+    <div class="wrap">
+      <div data-reveal>
+        <span class="label">Questions</span>
+        <h2>Before you leave an email.</h2>
+      </div>
+      <div data-reveal>
+        <div class="faq-item"><h3>Do I have to be a geologist?</h3><p>No. Rock people, broadly defined — geologists, boulderers, punks, cave swimmers. One of those is enough.</p></div>
+        <div class="faq-item"><h3>What does the quiz actually measure?</h3><p>Pace and pressure, not taste. It returns a rock type — sedimentary, igneous, or metamorphic — that describes how you date. Interests are scored separately.</p></div>
+        <div class="faq-item"><h3>Can I change my rock type later?</h3><p>You can retake the quiz every 30 days, so take it seriously. No gaming the system.</p></div>
+        <div class="faq-item"><h3>When does it open?</h3><p>As soon as we have enough people on the waitlist. Tell your friends!</p></div>
+        <div class="faq-item"><h3>What happens to my email?</h3><p>It sits on the waitlist and gets used once, at launch. No newsletter, no sharing it with anyone else.</p></div>
+        <div class="faq-item"><h3>Is this a rock music app or a geology app?</h3><p>Both, on purpose. The interest layer keeps them apart when you want them apart.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WAITLIST CTA ================= -->
+  <section class="band" id="waitlist">
+    <div class="wrap">
+      <span class="wordmark wordmark--ink wordmark--lg">Rock<span class="dot">.</span></span>
+      <h2>Send it together.</h2>
+      <p class="body">Leave an email. You will only receive your invitation to the app.</p>
+
+      <form class="waitlist-form js-form" data-form="waitlist" novalidate>
+        <div class="grow">
+          <input class="input" type="email" name="email" placeholder="you@example.com" aria-label="Email address" required />
+          <div class="field-note">One email at launch. No newsletter.</div>
+          <div class="form-note" role="status" aria-live="polite"></div>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg">Join the waitlist</button>
+      </form>
+
+      <div class="sent-state js-sent settle" hidden>
+        <span class="badge badge--lichen">On the list</span>
+        <p class="js-sent-note"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer rock-dark">
+  <div class="inner">
+    <span class="wordmark wordmark--md">Rock<span class="dot">.</span></span>
+    <div class="tagline">A dating app for rock people, broadly defined.</div>
+  </div>
+  <div class="fine"><span>ROCK · 2026 · Not yet available. Geology is patient.</span></div>
+</footer>
 
 <script>
 (async function(){
-  const COUNT_KEY = 'waitlist-count';
+  /* ============================================================
+     Waitlist — persistence + Google Sheet (unchanged behaviour)
+     ============================================================ */
   const MY_SIGNUP_KEY = 'my-signup';
   const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzqR4X5FcpCkOKOfaPNp-1FJq11z5yq97B1l5nfUMMLKsAioVnw544IA4DdJfKXMo7r/exec';
 
@@ -435,21 +733,6 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   }
 
-  async function getCount(){
-    try{
-      const res = await window.storage.get(COUNT_KEY, true);
-      return res ? parseInt(res.value, 10) : 0;
-    }catch(e){
-      return 0;
-    }
-  }
-
-  async function setCount(n){
-    try{
-      await window.storage.set(COUNT_KEY, String(n), true);
-    }catch(e){ /* non-fatal */ }
-  }
-
   async function alreadySignedUp(){
     try{
       const res = await window.storage.get(MY_SIGNUP_KEY, false);
@@ -465,72 +748,183 @@
     }catch(e){ /* non-fatal */ }
   }
 
-  async function handleSubmit(emailInput, noteEl, submitBtn){
+  function showSent(email){
+    document.querySelectorAll('.js-form').forEach(f => { f.hidden = true; });
+    document.querySelectorAll('.js-sent').forEach(s => {
+      s.hidden = false;
+      const note = s.querySelector('.js-sent-note');
+      if(note) note.textContent = 'Saved ' + email + '. You’ll hear from us once, at launch.';
+    });
+  }
+
+  async function handleSubmit(form){
+    const emailInput = form.querySelector('input[type="email"]');
+    const noteEl = form.querySelector('.form-note');
+    const submitBtn = form.querySelector('button[type="submit"]');
     const email = emailInput.value.trim();
+
     if(!isValidEmail(email)){
-      noteEl.textContent = "That doesn't look like a rock-solid email address.";
+      noteEl.textContent = "that doesn't look like a rock-solid email address.";
       noteEl.className = 'form-note error';
       return;
     }
+
     submitBtn.disabled = true;
     const originalLabel = submitBtn.textContent;
     submitBtn.textContent = 'Joining…';
+    noteEl.textContent = '';
+    noteEl.className = 'form-note';
+
     try{
       const existing = await alreadySignedUp();
       await postToSheet(email);
       if(!existing){
-        const current = await getCount();
-        await setCount(current + 1);
         await recordSignup(email);
       }
-      noteEl.textContent = "You're on the list. We'll be in touch.";
-      noteEl.className = 'form-note success';
-      emailInput.value = '';
+      showSent(email);
     }catch(e){
-      noteEl.textContent = 'Something slipped. Mind trying again?';
+      noteEl.textContent = 'something slipped. mind trying again?';
       noteEl.className = 'form-note error';
-    }finally{
       submitBtn.disabled = false;
       submitBtn.textContent = originalLabel;
     }
   }
 
-  document.getElementById('hero-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    handleSubmit(
-      document.getElementById('hero-email'),
-      document.getElementById('hero-note'),
-      e.target.querySelector('button')
-    );
-  });
-
-  document.getElementById('footer-form').addEventListener('submit', function(e){
-    e.preventDefault();
-    handleSubmit(
-      document.getElementById('footer-email'),
-      document.getElementById('footer-note'),
-      e.target.querySelector('button')
-    );
-  });
-
-  // reveal on scroll
-  const revealEls = document.querySelectorAll('[data-reveal]');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        entry.target.classList.add('visible');
-        io.unobserve(entry.target);
-      }
+  document.querySelectorAll('.js-form').forEach(form => {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      handleSubmit(form);
     });
-  }, {threshold: 0.2});
-  revealEls.forEach(el => io.observe(el));
+  });
 
-  // check if already signed up, prefill note
+  // If this visitor already joined, show the confirmed state everywhere.
   const existing = await alreadySignedUp();
-  if(existing){
-    document.getElementById('hero-note').textContent = "You're already on the list.";
-    document.getElementById('hero-note').className = 'form-note success';
+  if(existing && existing.email){
+    showSent(existing.email);
   }
+
+  /* ============================================================
+     Quiz demo — formation blurb + interest / compatibility preview
+     ============================================================ */
+  const BLURB = {
+    Sedimentary: 'Takes their time. Building a strong foundation is most important.',
+    Igneous: 'When you know you know. Ready to dive into something new.',
+    Metamorphic: 'Adaptable. Built by experience, will move at the right pace for the right person.'
+  };
+  const PAIRING = {
+    Sedimentary: 'steady against changeable',
+    Igneous: 'complementary strata',
+    Metamorphic: 'both built by pressure'
+  };
+  const CHIPS = [
+    'Rock music',
+    'Bouldering and climbing',
+    'Geology and field work',
+    'Pop rock: Rockefeller, Rockettes, the Rock',
+    'Earth-bending and tabletop games',
+    'Cave exploring',
+    'Gravel and off-roading',
+    'Rock salt and cooking',
+    'Gemstones and crystals'
+  ];
+  const BAR_FILLS = ['var(--iron-500)', 'var(--iron-600)', 'var(--rock-mica)', 'var(--rock-lichen)'];
+
+  const state = { formation: 'Igneous', picked: ['Rock music', 'Cave exploring'] };
+
+  // formation segmented control
+  const segButtons = document.querySelectorAll('#formation button');
+  segButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.formation = btn.dataset.formation;
+      segButtons.forEach(b => b.setAttribute('aria-selected', String(b === btn)));
+      document.getElementById('formationBlurb').textContent = BLURB[state.formation];
+      renderCompat();
+    });
+  });
+
+  // interest chips
+  const cloud = document.getElementById('chipCloud');
+  CHIPS.forEach(name => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip chip--dark';
+    b.textContent = name;
+    b.setAttribute('aria-pressed', String(state.picked.includes(name)));
+    b.addEventListener('click', () => {
+      state.picked = state.picked.includes(name)
+        ? state.picked.filter(x => x !== name)
+        : state.picked.concat(name);
+      b.setAttribute('aria-pressed', String(state.picked.includes(name)));
+      renderCompat();
+    });
+    cloud.appendChild(b);
+  });
+
+  const bars = document.querySelectorAll('#compatBars span');
+  const labelEl = document.getElementById('compatLabel');
+  const reasonsEl = document.getElementById('compatReasons');
+
+  function renderCompat(){
+    const picked = state.picked;
+    const level = picked.length === 0 ? 1 : picked.length <= 2 ? 2 : picked.length <= 4 ? 3 : 4;
+
+    bars.forEach((bar, i) => {
+      bar.style.background = (i + 1) <= level ? BAR_FILLS[i] : 'rgba(234,231,221,.14)';
+    });
+    labelEl.textContent = 'compatibility · ' + level + ' of 4 layers';
+
+    const reasons = [
+      picked.length + ' of ' + CHIPS.length + ' rock interests overlap',
+      state.formation + ' meets metamorphic — ' + PAIRING[state.formation],
+      'Quiz answers agreed on ' + level + ' of 4 layers'
+    ];
+    reasonsEl.innerHTML = '';
+    reasons.forEach(text => {
+      const row = document.createElement('div');
+      row.className = 'r';
+      const tick = document.createElement('span');
+      tick.className = 'tick';
+      tick.textContent = '✓';
+      const txt = document.createElement('span');
+      txt.className = 'txt';
+      txt.textContent = text;
+      row.appendChild(tick);
+      row.appendChild(txt);
+      reasonsEl.appendChild(row);
+    });
+  }
+  renderCompat();
+
+  /* ============================================================
+     Reveal on scroll
+     ============================================================ */
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold: 0.15});
+    revealEls.forEach(el => io.observe(el));
+  }else{
+    revealEls.forEach(el => el.classList.add('revealed'));
+  }
+
+  /* ============================================================
+     Hero photo — flag when present so the gradient sits on top
+     ============================================================ */
+  (function(){
+    const hero = document.getElementById('hero');
+    const img = new Image();
+    img.onload = () => {
+      hero.classList.add('has-photo');
+      hero.style.backgroundImage = "url('IMG_4962.JPG')";
+    };
+    img.src = 'IMG_4962.JPG';
+  })();
 })();
 </script>
 
