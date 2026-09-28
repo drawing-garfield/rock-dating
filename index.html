@@ -7,7 +7,7 @@
 <meta name="description" content="A dating app for rock people, broadly defined. Geology, punk rock, rocket launches, the Rockettes — if you like some sort of rock, there's a match for you. Join the waitlist." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Work+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Rokkitt:wght@700;900&family=Work+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
      ROCK design-system tokens  (from rock-design-system-8beb22)
@@ -85,6 +85,7 @@
 
     /* type */
     --font-display:"Archivo","Work Sans",-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --font-wordmark:"Rokkitt",Georgia,"Times New Roman",serif;
     --font-body:"Work Sans",-apple-system,"Helvetica Neue",Arial,sans-serif;
     --font-mono:"Space Grotesk","Work Sans",-apple-system,sans-serif;
 
@@ -188,9 +189,9 @@
      components
      ============================================================ */
 
-  /* wordmark — "ROCK." re-typeset in Rokkitt Black, period in iron red */
+  /* wordmark — "ROCK." re-typeset in Rokkitt Black (kept from the original brand mark), period in iron red */
   .wordmark{
-    font-family:var(--font-display);
+    font-family:var(--font-wordmark);
     font-weight:900;
     text-transform:uppercase;
     letter-spacing:-0.02em;
